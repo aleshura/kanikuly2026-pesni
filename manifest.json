@@ -1,0 +1,12 @@
+{
+  "name": "Общение и освобождение — Песни",
+  "short_name": "Песни",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b5fa5",
+  "icons": [
+    { "src": "icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
