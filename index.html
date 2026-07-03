@@ -1586,7 +1586,6 @@ my Cavan girl, so fair</p>
 <button id="to-top" title="Наверх">&uarr;</button>
 <script>
 "use strict";
-(function () {
 // Every feature below is initialized inside its own safeInit() call so that
 // a failure in one (e.g. a storage or selector quirk in some browser) can
 // never silently prevent the others from working -- this is important on
@@ -2056,7 +2055,6 @@ safeInit("no isolated words on a wrapped line", function () {
   window.addEventListener("orientationchange", scheduleRun);
   refreshWidowFix = scheduleRun;
 });
-})();
 
 // ---------- offline support: cache this page so it keeps working without a
 // network connection once it has been opened online at least once (this
