@@ -2070,6 +2070,26 @@ safeInit("offline caching (service worker)", function () {
     });
   }
 });
+
+// ---------- auto-collapse a translation once it scrolls off screen ----------
+// Otherwise every translation opened while browsing stays open and the page
+// just keeps getting longer as you scroll through the songbook.
+safeInit("auto-collapse scrolled-away translations", function () {
+  if (!('IntersectionObserver' in window)) { return; }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting && entry.target.open) {
+        entry.target.open = false;
+      }
+    });
+  }, { threshold: 0 });
+  document.querySelectorAll("details.translation").forEach(function (det) {
+    det.addEventListener("toggle", function () {
+      if (det.open) { observer.observe(det); }
+      else { observer.unobserve(det); }
+    });
+  });
+});
 </script>
 </body>
 </html>
