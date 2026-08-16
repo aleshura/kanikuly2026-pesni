@@ -3,36 +3,87 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Песенник — новый адрес</title>
-<meta http-equiv="refresh" content="0; url=https://clrussia.github.io/pesennik/">
-<link rel="manifest" href="manifest.json">
+<title>Песенник переехал</title>
 <style>
   :root{color-scheme: light dark;}
-  html,body{height:100%;margin:0;}
+  html,body{margin:0;min-height:100%;}
   body{
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-    display:flex;align-items:center;justify-content:center;
-    padding:24px;text-align:center;
+    display:flex;justify-content:center;
+    padding:28px;
     background:#f4f8f8;color:#2D4A50;
   }
   @media (prefers-color-scheme: dark){
     body{background:#0d2126;color:#e9f3f2;}
-    a{color:#5fc3d1;}
+    .card{background:#16333a;border-color:rgba(233,243,242,0.12);}
+    .btn{background:#5fc3d1;color:#0d2126;}
+    h1{color:#5fc3d1;}
   }
-  a{color:#3A8E9E;font-weight:700;text-decoration:none;}
-  p{max-width:320px;line-height:1.6;font-size:15px;margin:0 0 14px;}
+  .card{
+    max-width:420px;width:100%;
+    background:#ffffff;border:1.5px solid rgba(45,74,80,0.13);
+    border-radius:22px;padding:28px 24px;
+    box-shadow:0 8px 28px rgba(45,74,80,0.14);
+  }
+  h1{
+    margin:0 0 16px;font-size:15px;line-height:1.3;
+    font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    color:#3A8E9E;
+  }
+  p{margin:0 0 14px;font-size:15px;line-height:1.6;}
+  p.label{font-weight:700;margin-bottom:8px;}
+  ol{margin:0 0 14px;padding-left:22px;font-size:15px;line-height:1.55;}
+  ol li{margin-bottom:6px;}
+  ol li:last-child{margin-bottom:0;}
+  .btn{
+    display:block;width:100%;box-sizing:border-box;
+    background:#3A8E9E;color:#fff;
+    border:none;border-radius:999px;
+    padding:14px 20px;
+    font-size:15px;font-weight:700;text-align:center;
+    text-decoration:none;
+    margin-top:22px;
+  }
 </style>
+<script>
+  // Показываем эту страницу только один раз -- если человек уже видел
+  // её (не пересохранив приложение, так и продолжает тыкать в старый
+  // ярлык), сразу отправляем дальше, не показывая текст снова. Проверка
+  // -- в <head>, до отрисовки .card, чтобы при повторном заходе не было
+  // даже мелькания карточки перед переходом.
+  try {
+    if (localStorage.getItem('sb_moved_notice_seen')) {
+      location.replace('https://clrussia.github.io/pesennik/');
+    }
+  } catch (e) {}
+</script>
 </head>
 <body>
-  <div>
-    <p>Песенник переехал на новый адрес. Переход должен произойти автоматически.</p>
-    <p>Если этого не случилось — <a href="https://clrussia.github.io/pesennik/">откройте новую ссылку</a>.</p>
+  <div class="card">
+    <h1>Важная информация!</h1>
+    <p>Песенник существенно изменился и&nbsp;переехал на&nbsp;новый адрес. Ваша версия автоматически обновится и&nbsp;будет полноценно работать, но,&nbsp;чтобы&nbsp;быть уверенными на&nbsp;сто процентов в&nbsp;корректности всех дальнейших обновлений, рекомендуем пересохранить приложение на&nbsp;главный экран устройства.</p>
+    <p>Как это сделать?</p>
+    <p class="label">На&nbsp;iPhone или&nbsp;iPad:</p>
+    <ol>
+      <li>Откройте ссылку в&nbsp;Safari (именно в&nbsp;Safari, не&nbsp;в&nbsp;другом браузере).</li>
+      <li>Нажмите на&nbsp;иконку «Поделиться» внизу экрана&nbsp;— квадрат со&nbsp;стрелкой вверх.</li>
+      <li>Прокрутите список вниз и&nbsp;выберите «На&nbsp;экран „Домой“».</li>
+      <li>Нажмите «Добавить» в&nbsp;правом верхнем углу.</li>
+    </ol>
+    <p class="label">На&nbsp;Android:</p>
+    <ol>
+      <li>Откройте ссылку в&nbsp;браузере (лучше всего использовать Chrome).</li>
+      <li>Нажмите на&nbsp;три точки в&nbsp;правом верхнем углу.</li>
+      <li>Выберите «Установить и&nbsp;создать ярлык»&nbsp;— «Установить» (или&nbsp;«Добавить на&nbsp;главный экран» в&nbsp;других браузерах).</li>
+      <li>Подтвердите действие.</li>
+    </ol>
+    <a class="btn" href="https://clrussia.github.io/pesennik/">Перейти к&nbsp;песеннику</a>
   </div>
   <script>
-    // Снимаем старый service worker и чистим его кэш: этот адрес больше
-    // не полноценное приложение, а только редирект-заглушка, держать
-    // на нём офлайн-кэш незачем и вредно (может мешать редиректу при
-    // плохой сети).
+    try { localStorage.setItem('sb_moved_notice_seen', '1'); } catch (e) {}
+    // Старый service worker больше не нужен -- снимаем его и чистим
+    // кэш в фоне, не мешая человеку читать и решать самому, когда
+    // перейти по кнопке (без автоперехода, сколько угодно времени).
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function (regs) {
         regs.forEach(function (r) { r.unregister(); });
@@ -43,7 +94,6 @@
         keys.forEach(function (k) { caches.delete(k); });
       }).catch(function () {});
     }
-    location.replace('https://clrussia.github.io/pesennik/');
   </script>
 </body>
 </html>
